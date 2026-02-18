@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'your-secret-key'
+SECRET_KEY = 'c!)@8kzqb&8jfrqj6_dapb=w)$vra4d**n@&9(rr0#hp+f4!bf'
 
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
