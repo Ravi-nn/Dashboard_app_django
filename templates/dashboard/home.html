@@ -1,0 +1,84 @@
+{% extends 'dashboard/dashboard_base.html' %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<form method="GET" class="mb-3">
+    <input type="text" name="search" placeholder="Search by name"
+           value="{{ search_query }}" class="form-control w-25 d-inline">
+    <button class="btn btn-primary">Search</button>
+</form>
+
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card bg-primary text-white p-3">
+            <h5>Total Contacts</h5>
+            <h2>{{ total_contacts }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card bg-success text-white p-3">
+            <h5>Today's Contacts</h5>
+            <h2>{{ today_contacts }}</h2>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for contact in page_obj %}
+    <tr>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.message }}</td>
+        <td>{{ contact.created_at }}</td>
+        <td>
+            <a href="{% url 'delete_contact' contact.pk %}"
+               class="btn btn-danger btn-sm">
+               Delete
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <a class="page-link">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </a>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% endblock %}
