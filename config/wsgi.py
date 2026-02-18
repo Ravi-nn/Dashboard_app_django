@@ -7,4 +7,3 @@ application = get_wsgi_application()
 
 # Required by Vercel
 app = application
-handler = application
